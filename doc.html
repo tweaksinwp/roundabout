@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<title>Carousel javascript - FR</title>
+	<link href='http://fonts.googleapis.com/css?family=Quattrocento' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/g.css">
+	<script src="carouselHorizontal.js"></script>
+
+	<script>
+		window.onload = function(){
+
+			/* Démo exemple 1 */
+			allnodeExample1 = $.getElementsByClassName(document.body,"example1");
+			$.carouselize({noeud:allnodeExample1});
+
+			/* Démo exemple 2 */
+			allnodeExample2 = $.getElementsByClassName(document.body,"example2");
+			$.carouselize({
+				noeud:allnodeExample2,
+				btNext:"arrowNext",
+				btPrev:"arrowPrev",
+				endRotation: 14000
+			});
+
+			/* Démo exemple 3 */
+			allnodeExample3 = $.getElementsByClassName(document.body,"example3");
+			thumbnail3 = $.getElementsByClassName(document.body,"thumbs");
+			$.carouselize({
+				noeud:allnodeExample3,
+				thumbnail:thumbnail3
+			});
+
+			/* Démo exemple 4 */
+			allnodeExample4 = $.getElementsByClassName(document.body,"example4");
+			$.carouselize({
+				noeud:allnodeExample4,
+				timer:1000
+			});
+
+			/* Démo exemple 5 */
+			allnodeExample5 = $.getElementsByClassName(document.body,"example5");
+			thumbnail4 = $.getElementsByClassName(document.body,"thumbs2");
+			$.carouselize({
+				noeud:allnodeExample5,
+				thumbnail:thumbnail4,
+				thumbHover:1
+			});
+
+		}
+	</script>
+
+</head>
+<body>
+	<h1>roundabout</h1>
+
+	<p>
+		<strong>Roundabout</strong> est un plugin javascript de carrousel qui permet de faire défiler des médias sous forme de listes d'éléments html, images, textes ou autre. Sa particularité est qu'il n'est que pur javascript, 
+		et a été conçut à la base pour remplacer le plugin <a target="_blank" href="http://jquery.malsup.com/cycle2/demo/carousel.php">Cycle</a>, suite à 
+		la suppression de la bibliothéque jQuery dont il étais dépendant. Cependant, dans un souci d'optimisation, le plugin n'a 
+		conservé que les fonctionnalités nécessaires pour le fonctionnement des widget déployés dans le cadre du programme <a target="_blank" href="http://affinitad.fr">Affinitad</a>
+	</p>
+	<p>
+		Utilisable et testé à partir d'ie7, firefox 23.0.1, Opéra 12.16, Safari 4.0.2 et Chrome 28.0.1500.95 m
+	</p>
+
+	<h2>Le déployer.</h2>
+
+	<h3>Exemple simple :</h3>
+	<div id="example1">
+		<div class="example1"><img width="100" height="29" alt="" src="i/affinitad.png" /></div>
+		<div class="example1"><img width="100" height="21" alt="" src="i/twenga.png" /></div>
+		<div class="example1"><img width="100" height="45" alt="" src="i/tangou.png" /></div>
+		<div class="example1"><img width="100" height="16" alt="" src="i/showcase.png" /></div>
+		<div class="example1"><img width="100" height="36" alt="" src="i/adexmachina.png" /></div>
+	</div>
+
+	<h3>Le HTML :</h3>
+		<pre>
+<span class="color0">&lt;div id="example1"&gt;</span>
+  <span class="color1">&lt;div class="example1"&gt;</span>
+	&lt;img width="100" height="29" alt="" src="i/affinitad.png" /&gt;
+  <span class="color1">&lt;/div&gt;</span>
+  <span class="color1">&lt;div class="example1"&gt;</span>
+	&lt;img width="100" height="21" alt="" src="i/twenga.png" /&gt;
+  <span class="color1">&lt;/div&gt;</span>
+  <span class="color1">&lt;div class="example1"&gt;</span>
+	&lt;img width="100" height="45" alt="" src="i/tangou.png" /&gt;
+  <span class="color1">&lt;/div&gt;</span>
+  <span class="color1">&lt;div class="example1"&gt;</span>
+	&lt;img width="100" height="16" alt="" src="i/showcase.png" /&gt;
+  <span class="color1">&lt;/div&gt;</span>
+  <span class="color1">&lt;div class="example1"&gt;</span>
+	&lt;img width="100" height="36" alt="" src="i/adexmachina.png" /&gt;
+  <span class="color1">&lt;/div&gt;</span>
+<span class="color0">&lt;/div&gt;</span>
+</pre>
+
+	<h3>Le javascript :</h3>
+<pre>
+allnodeExample1 = $.getElementsByClassName(document.body,<span class="color1">"example1"</span>);
+$.carouselize({noeud:allnodeExample1});
+</pre>
+
+	<h3>Le CSS :</h3>
+		<pre>
+<span class="color0">#example1</span>{width:100px;height:45px;overflow:hidden;border:1px solid #555;}
+<span class="color1">.example1</span>{width:100px;}
+</pre>
+
+	<h3>Principes :</h3>
+	<ul>
+		<li>
+			Pour la structure HTML, Avoir un div conteneur <i>(#example1)</i> qui contienne une liste d'éléments enfants <i>(.example1)</i>. Ces éléments enfants peuvent contenir tout et n'importe quoi.
+		</li>
+		<li>
+			En javascript, après avoir appelé le script (&lt;script src="votrechemin/carouselHorizontal.js"&gt;&lt;/script&gt;) le plugin est contenu dans l'objet "$" qui contient plusieurs méthode, notamment la méthode getElementsByClassName qui vous permet de récupérer et de stocker la liste d'éléments que vous souhaitez voir défiler. Il vous suffit de passer cette liste de noeud au paramètre "noeud".
+		</li>
+		<li>
+			En CSS, il faut affecter une valeur fixe pour la largeur et la hauteur de l'élément parent, qui sera la "lucarne" dans laquelle défilera vos élèments. idéalement, chaque noeud enfant doit au moins avoir la même largeur, au risque de voir ceux-ci débordé dans la lucarne.
+		</li>
+	</ul>
+
+	<h2>Options et leur Paramètres</h2>
+
+	<p>
+		Il y a suffisament de paramètres pour gérer des interactions avec un compteur, des miniatures, des flêches ou différentes actions bien déterminées.
+	</p>
+
+	<ul class="params">
+		<li>
+			<a>
+				<strong>noeud</strong> 
+				Un tableau contenant les noeuds DOM des éléments qui ont vocation à défiler.
+			</a>
+		</li>
+		<li>
+			<a>
+				<strong>thumbnail</strong>
+				Un tableau contenant les noeuds DOM qui serviront de miniatures. Une classe <i>"activeSlide"</i> est automatiquement attribué à la miniature associée à l'élément du slide ayant le focus.
+			</a>
+		</li>
+		<li>
+			<a>
+				<strong>thumbHover</strong>
+				Valeur booléenne qui prendra en compte l'event mouseover sur les miniatures.
+				le paramètre thumbnail doit exister pour que ce paramètre fonctionne.
+			</a>
+		</li>
+		<li>
+			<a>
+				<strong>endRotation</strong> 
+				Temps en millisecondes au bout duquel la rotation stop. Par défaut, l'animation ne s'arrête jamais.
+			</a>
+		</li>
+		<li>
+			<a>
+				<strong>compteur</strong>
+				Chaine représentant l'attribut ID direct ou s'affichera le numéro de la slide active.
+			</a>
+		</li>
+		<li>
+			<a>
+				<strong>btNext</strong>
+				Chaîne représentant l'attribut ID du noeud DOM auquel sera associé l'action "slide suivante".
+			</a>
+		</li>
+		<li>
+			<a>
+				<strong>btPrev</strong>
+				Chaîne représentant l'attribut ID du noeud DOM auquel sera associé l'action "slide précédente".
+			</a>
+		</li>
+		<li>
+			<a>
+				<strong>timer</strong>
+				Le temps en millisecondes entre deux début de défilement. Par défaut, à 2000.
+			</a>
+		</li>
+		<li>
+			<a>
+				<strong>interactStopAll</strong>
+				Valeur booléenne pour indiquer si oui ou non on stop le carousel lors d'un clique sur un des éléments d'interface de celui-ci. Pour les flêches ou les miniatures.
+			</a>
+		</li>
+		<li>
+			<a>
+				<strong>AnimFrequency</strong>
+				Temps en millisecondes qui est la fréquence utilisée pour l'animation de rotation des éléments. Par défaut, initialisé à 30.
+			</a>
+		</li>
+		<li>
+			<a>
+				<strong>AnimSplitdistance</strong>
+				Valeur numérique indiquant la distance parcourue en pixel durant l'animation de rotation entre chaque intervalles de temps dans le paramètre potentiellement définit au dessus. Par défaut, initialisé à 1 pixel. Cette valeur s'incrémente automatiquement au cours de l'animation, d'un pixel supplémentaire.
+			</a>
+		</li>
+	</ul>
+
+	<h2>Exemples</h2>
+
+	<div class="part">
+		<p>Avec bouton avant, arrière et un stop automatique, quoi qu'il advienne</p>
+		<div class="demo">
+			<div id="arrowPrev" class="arr"></div>
+			<div id="arrowNext" class="arr"></div>
+			<div class="windows" id="example2">
+				<div class="example example2"><img width="100" height="29" alt="" src="i/affinitad.png" /></div>
+				<div class="example example2"><img width="100" height="21" alt="" src="i/twenga.png" /></div>
+				<div class="example example2"><img width="100" height="45" alt="" src="i/tangou.png" /></div>
+				<div class="example example2"><img width="100" height="16" alt="" src="i/showcase.png" /></div>
+				<div class="example example2"><img width="100" height="36" alt="" src="i/adexmachina.png" /></div>
+			</div>
+		</div>
+
+		<pre>
+allnodeExample2 = $.getElementsByClassName(document.body,"example2");
+$.carouselize({
+	noeud:allnodeExample2,
+	btNext:"arrowNext",
+	btPrev:"arrowPrev",
+	endRotation: 14000
+});
+		</pre>
+
+	</div>
+	<div class="part">
+		<p>Avec miniatures</p>
+		<div class="demo">
+			<div class="windows" id="example3">
+				<div class="example example3"><img width="100" height="29" alt="" src="i/affinitad.png" /></div>
+				<div class="example example3"><img width="100" height="21" alt="" src="i/twenga.png" /></div>
+				<div class="example example3"><img width="100" height="45" alt="" src="i/tangou.png" /></div>
+				<div class="example example3"><img width="100" height="16" alt="" src="i/showcase.png" /></div>
+				<div class="example example3"><img width="100" height="36" alt="" src="i/adexmachina.png" /></div>
+			</div>
+			<div class="thumbnails">
+				<span class="thumbs c1" title="Affinitad"></span>
+				<span class="thumbs c2" title="Twenga"></span>
+				<span class="thumbs c3" title="Tangou"></span>
+				<span class="thumbs c4" title="Showcase"></span>
+				<span class="thumbs c5" title="Adexmachina"></span>
+			</div>
+		</div>
+
+		<pre>
+allnodeExample3 = $.getElementsByClassName(document.body,"example3");
+thumbnail3 = $.getElementsByClassName(document.body,"thumbs");
+$.carouselize({
+	noeud:allnodeExample3,
+	thumbnail:thumbnail3
+});
+		</pre>
+
+
+	</div>
+	<div class="part">
+		<p>Avec miniatures</p>
+		<div class="demo">
+			<div class="windows" id="example4">
+				<div class="example example4"><img width="100" height="29" alt="" src="i/affinitad.png" /></div>
+				<div class="example example4"><img width="100" height="21" alt="" src="i/twenga.png" /></div>
+				<div class="example example4"><img width="100" height="45" alt="" src="i/tangou.png" /></div>
+				<div class="example example4"><img width="100" height="16" alt="" src="i/showcase.png" /></div>
+				<div class="example example4"><img width="100" height="36" alt="" src="i/adexmachina.png" /></div>
+			</div>
+		</div>
+
+		<pre>
+allnodeExample4 = $.getElementsByClassName(document.body,"example4");
+$.carouselize({
+	noeud:allnodeExample4,
+	timer:1000
+});
+		</pre>
+
+	</div>
+	<div class="part">
+		<p>Avec miniatures</p>
+		<div class="demo">
+			<div class="windows" id="example5">
+				<div class="example example5"><img width="100" height="29" alt="" src="i/affinitad.png" /></div>
+				<div class="example example5"><img width="100" height="21" alt="" src="i/twenga.png" /></div>
+				<div class="example example5"><img width="100" height="45" alt="" src="i/tangou.png" /></div>
+				<div class="example example5"><img width="100" height="16" alt="" src="i/showcase.png" /></div>
+				<div class="example example5"><img width="100" height="36" alt="" src="i/adexmachina.png" /></div>
+			</div>
+			<div class="thumbnails">
+				<span class="thumbs2 c1" title="Affinitad"></span>
+				<span class="thumbs2 c2" title="Twenga"></span>
+				<span class="thumbs2 c3" title="Tangou"></span>
+				<span class="thumbs2 c4" title="Showcase"></span>
+				<span class="thumbs2 c5" title="Adexmachina"></span>
+			</div>
+		</div>
+
+		<pre>
+allnodeExample5 = $.getElementsByClassName(document.body,"example5");
+thumbnail4 = $.getElementsByClassName(document.body,"thumbs2");
+$.carouselize({
+	noeud:allnodeExample5,
+	thumbnail:thumbnail4,
+	thumbHover:1
+});
+		</pre>
+	</div>
+
+
+</body>
+</html>
