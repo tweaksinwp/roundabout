@@ -193,13 +193,14 @@
                             $.removeClass(thumbnail[n],"activeSlide");
                         }
                         var fnName3 = _gototheslide(n);
-                        $.attachEventClick(thumbnail[n],fnName3);
+                        $.attachAnEvent("click",thumbnail[n],fnName3);
                     }
                     
                     if(thumbHover===1){
                         for(var q=0; q<nbrThbnls; q++){
                             hoverCallback[q] = _gotothepic(q);
-                            $.attachEventHover(thumbnail[q],hoverCallback[q]);
+                            $.attachAnEvent("mouseover",thumbnail[q],hoverCallback[q]);
+                            //$.detachAnEvent("mouseover",thumbnail[q],hoverCallback[q]);
                         }
                     }
                 }
@@ -219,20 +220,20 @@
             /* = initialisation clicks ================================================================= */
             function _btClick(NbtNext,NbtPrev){
                 if(NbtNext){
-                    $.attachEventClick(NbtNext,fnName1);
+                    $.attachAnEvent("click",NbtNext,fnName1);
                 }
                 if(NbtPrev){
-                    $.attachEventClick(NbtPrev,fnName2);
+                    $.attachAnEvent("click",NbtPrev,fnName2);
                 }
             }
 
             /* = désinitialisation clicks ================================================================= */
             function _btUnClick(NbtNext,NbtPrev){
                 if(NbtNext){
-                    $.detachEventClick(NbtNext,fnName1);
+                    $.detachAnEvent("click",NbtNext,fnName1);
                 }
                 if(NbtPrev){
-                    $.detachEventClick(NbtPrev,fnName2);
+                    $.detachAnEvent("click",NbtPrev,fnName2);
                 }
             }
 
@@ -241,7 +242,7 @@
                 if(thumbHover===1){
                     nbrThbnls = thumbnail.length;
                     for(var u=0;u<nbrThbnls;u++){
-                        $.detachEventHover(thumbnail[u],hoverCallback[u]);
+                        $.detachAnEvent("mouseover",thumbnail[u],hoverCallback[u]);
                     }
                 }
             }
@@ -343,7 +344,7 @@
             }
 
             /**
-            * Move directly on the slide corresponding to the thumbnail in mouseover
+            * Slide smoothly to the slide corresponding to the thumbnail when click is detected
             */
             function _slideDirectTo(action,to){
                 _btUnClick(next,prev);
@@ -517,35 +518,23 @@
         nodeToCheck.className = nwClass;
     };
 
-    $.attachEventHover = function(NId,fnName){
+    $.attachAnEvent = function(evName,NId,fnName){
+        var evNameIE = "";
+        if(evName==="click"){evNameIE = "onclick";}else{evNameIE=evName;}
         if(NId.addEventListener){
-          NId.addEventListener("mouseover", fnName, false);
+          NId.addEventListener(evName, fnName, false);
         }else if(NId.attachEvent){
-          NId.attachEvent("mouseover", fnName);
+          NId.attachEvent(evNameIE, fnName);
         }
-    };
+    }
 
-    $.detachEventHover = function(NId,fnName){
+    $.detachAnEvent = function(evName,NId,fnName){
+        var evNameIE = "";
+        if(evName==="click"){evNameIE = "onclick";}else{evNameIE=evName;}
         if(NId.removeEventListener){
-          NId.removeEventListener("mouseover", fnName, false);
+          NId.removeEventListener(evName, fnName, false);
         }else if(NId.attachEvent){
-          NId.detachEvent("mouseover", fnName);
-        }
-    };
-
-    $.attachEventClick = function(NId,fnName){
-        if(NId.addEventListener){
-          NId.addEventListener("click", fnName, false);
-        }else if(NId.attachEvent){
-          NId.attachEvent("onclick", fnName);
-        }
-    };
-
-    $.detachEventClick = function(NId,fnName){
-        if(NId.removeEventListener){
-          NId.removeEventListener("click", fnName, false);
-        }else if(NId.attachEvent){
-          NId.detachEvent("onclick", fnName);
+          NId.detachEvent(evNameIE, fnName);
         }
     };
 
