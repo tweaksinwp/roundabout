@@ -49,6 +49,7 @@
         var anF = 30;
         var anD = 1;
         var originalanD = 1;
+        var hoverCallback = [];//for deactivate the hover if need
         var fnName1 = function(){_slideNext("action");};
         var fnName2 = function(){_slidePrev("action");};
         var fnName4 = function(){_gotothepic(0);};
@@ -197,13 +198,8 @@
                     
                     if(thumbHover===1){
                         for(var q=0; q<nbrThbnls; q++){
-                            /*thumbnail[q].addEventListener(
-                                "onmouseover",_displayDirect("action",q+1)
-                            );*/
-                            //thumbnail[q].onmouseover = function(){
-                                fnName4 = _gotothepic(q);
-                                $.attachEventHover(thumbnail[q],fnName4);
-                            //};
+                            hoverCallback[q] = _gotothepic(q);
+                            $.attachEventHover(thumbnail[q],hoverCallback[q]);
                         }
                     }
                 }
@@ -240,6 +236,17 @@
                 }
             }
 
+            /* event mouseover suppress on thumbnails */
+            function _thumbUnhover(){
+                if(thumbHover===1){
+                    nbrThbnls = thumbnail.length;
+                    for(var u=0;u<nbrThbnls;u++){
+                        $.detachEventHover(thumbnail[u],hoverCallback[u]);
+                    }
+                }
+            }
+
+
             /**
             * avance le carrousel d'une diapositive
             * si dernière diapo, on revient à la première
@@ -247,6 +254,7 @@
             function _slideNext(action){
                 direction = "left";
                 _btUnClick(next,prev);
+                _thumbUnhover();
                 if(action === "action"){_anteTreatment();}
                 if(!isAnimationRunning){
                     if(nbrElts !== 0){
@@ -293,6 +301,7 @@
             function _slidePrev(action){
                 direction = "right";
                 _btUnClick(next,prev);
+                _thumbUnhover();
                 if(action === "action"){_anteTreatment();}
                 if(!isAnimationRunning){
                     clearInterval(interval);
@@ -338,6 +347,7 @@
             */
             function _slideDirectTo(action,to){
                 _btUnClick(next,prev);
+                _thumbUnhover();
                 if(action === "action"){_anteTreatment();}//On désactive le clique sur les boutons si il y en a.
                 if(!isAnimationRunning){
                     direction = "left";
@@ -370,6 +380,7 @@
 
             function _displayDirect(action,to){
                 _btUnClick(next,prev);
+                _thumbUnhover();
                 if(action === "action"){_anteTreatment();}//On désactive le clique sur les boutons si il y en a.
                 if(!isAnimationRunning){
                     direction = "left";
@@ -379,9 +390,6 @@
                     if(nbrElts !== 0){
                         for(var p=0; p<nbrElts; p++){
                             pp = p+1;
-                            if(thumbHover === 1){
-                                $.detachEventHover(thumbnail,fnName4);
-                            }
                             if(p===cpt-1  && cpt!==to){//On déplace l'élément courant (modulo l'utilisateur n'as pas cliqué dessus)
                                 moveto = -widthElt;
                                 listElt[p].style.left = moveto+"px";
@@ -392,11 +400,6 @@
                         }
                         cpt = to;
                         _paginate(cpt);
-                        if(!interactStopAll){
-                            _initCarousel(eachTime);
-                        }else{
-                            _initThumbnail();
-                        }
                     }
                     if(!endOfWorld){//Si il n'y a pas de compte a rebours initialisé, on relance le carousel
                         _initCarousel(eachTime);
