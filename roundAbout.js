@@ -21,9 +21,9 @@
 
 (function(){
 
-    var $ = {};
+    var ra = {};
 
-    $.carouselize = function(params){
+    ra.carouselize = function(params){
 
         /**
         * Values uses in everywhere are setted here
@@ -52,7 +52,6 @@
         var hoverCallback = [];//for deactivate the hover if need
         var fnName1 = function(){_slideNext("action");};
         var fnName2 = function(){_slidePrev("action");};
-        var fnName4 = function(){_gotothepic(0);};
 
         listElt = params.noeud;
         thumbnail = params.thumbnail;
@@ -74,14 +73,14 @@
             var Lucarne = listElt[0].parentNode;
             wLucarne = Lucarne.offsetWidth;
             widthElt = listElt[0].offsetWidth;
-            $.addClass(listElt[0],"active");
+            ra.addClass(listElt[0],"active");
 
             /* On calcule la largeur du conteneur principal */
             //wContainer = nbrElts*widthElt;
 
-            $.setCssAttribute(Lucarne,"position:relative;");
+            ra.setCssAttribute(Lucarne,"position:relative;");
             for(var k=0; k<nbrElts; k++){
-                $.setCssAttribute(listElt[k],"position:absolute;left:"+widthElt*k+"px;");
+                ra.setCssAttribute(listElt[k],"position:absolute;left:"+widthElt*k+"px;");
             }
 
             if(endOfWorld){
@@ -153,9 +152,9 @@
             /* Gere la class "active" */
             function _prepareMove(targetNode,movefrom,moveto){
                 if(moveto === 0){
-                    $.addClass(targetNode,"active");
+                    ra.addClass(targetNode,"active");
                 }else{
-                    $.removeClass(targetNode,"active");
+                    ra.removeClass(targetNode,"active");
                 }
                 _anime(targetNode,movefrom,moveto);
             }
@@ -188,18 +187,18 @@
                     for(var n=0; n<nbrThbnls; n++){
                         thumbnail[n].numerous = n+1;
                         if(cpt === n+1){
-                            $.addClass(thumbnail[n],"activeSlide");
+                            ra.addClass(thumbnail[n],"activeSlide");
                         }else{
-                            $.removeClass(thumbnail[n],"activeSlide");
+                            ra.removeClass(thumbnail[n],"activeSlide");
                         }
                         var fnName3 = _gototheslide(n);
-                        $.attachAnEvent("click",thumbnail[n],fnName3);
+                        ra.attachAnEvent("click",thumbnail[n],fnName3);
                     }
                     
                     if(thumbHover===1){
                         for(var q=0; q<nbrThbnls; q++){
                             hoverCallback[q] = _gotothepic(q);
-                            $.attachAnEvent("mouseover",thumbnail[q],hoverCallback[q]);
+                            ra.attachAnEvent("mouseover",thumbnail[q],hoverCallback[q]);
                             //$.detachAnEvent("mouseover",thumbnail[q],hoverCallback[q]);
                         }
                     }
@@ -220,20 +219,20 @@
             /* = initialisation clicks ================================================================= */
             function _btClick(NbtNext,NbtPrev){
                 if(NbtNext){
-                    $.attachAnEvent("click",NbtNext,fnName1);
+                    ra.attachAnEvent("click",NbtNext,fnName1);
                 }
                 if(NbtPrev){
-                    $.attachAnEvent("click",NbtPrev,fnName2);
+                    ra.attachAnEvent("click",NbtPrev,fnName2);
                 }
             }
 
             /* = désinitialisation clicks ================================================================= */
             function _btUnClick(NbtNext,NbtPrev){
                 if(NbtNext){
-                    $.detachAnEvent("click",NbtNext,fnName1);
+                    ra.detachAnEvent("click",NbtNext,fnName1);
                 }
                 if(NbtPrev){
-                    $.detachAnEvent("click",NbtPrev,fnName2);
+                    ra.detachAnEvent("click",NbtPrev,fnName2);
                 }
             }
 
@@ -242,7 +241,7 @@
                 if(thumbHover===1){
                     nbrThbnls = thumbnail.length;
                     for(var u=0;u<nbrThbnls;u++){
-                        $.detachAnEvent("mouseover",thumbnail[u],hoverCallback[u]);
+                        ra.detachAnEvent("mouseover",thumbnail[u],hoverCallback[u]);
                     }
                 }
             }
@@ -413,7 +412,7 @@
 
 
 /* = Public functions ================================================================= */
-    $.getElementsByClassName = function(wrapNode, classname){
+    ra.getElementsByClassName = function(wrapNode, classname){
         if(document.querySelector===undefined){
             var a = [];
             var re = new RegExp('(^| )'+classname+'( |$)');
@@ -429,7 +428,7 @@
         }
     };
 
-    $.setCSS = function(domNode,keyValue){
+    ra.setCSS = function(domNode,keyValue){
         var existant = domNode.getAttribute("style");
         var itsanew = 0;
         var newString = "";
@@ -488,22 +487,33 @@
         }
     };
 
-    $.setCssAttribute = function(domNode, keyValue){
+    ra.setCssAttribute = function(domNode, keyValue){
         //if(domNode == undefined){return $;}//Retourne rien du tout si node est inexistant
         if(domNode.length === undefined){//Si le param domNode est le noeud directement...
-            $.setCSS(domNode,keyValue);
+            ra.setCSS(domNode,keyValue);
         }else{//... ou une liste de noeud contenu dans un tableau.
             for(var j=0; j<domNode.length; j++){
-                $.setCSS(domNode[j],keyValue);
+                ra.setCSS(domNode[j],keyValue);
             }
         }
     };
 
-    $.addClass = function(nodeToCheck, cl){
-        nodeToCheck.className = nodeToCheck.className+" "+cl;
+    ra.addClass = function(nodeToCheck, cl){
+        nodeToCheck.className = nodeToCheck.className;
+        var existing = nodeToCheck.className;
+        var clls = existing.split(" ");
+        var alreadyExist = 0;
+        for(var a=0; a<clls.length; a++){
+            if(clls[a]===cl){
+                alreadyExist++;
+            }
+        }
+        if(alreadyExist===0){
+            nodeToCheck.className = nodeToCheck.className+" "+cl;
+        }
     };
 
-    $.removeClass = function(nodeToCheck, cl){
+    ra.removeClass = function(nodeToCheck, cl){
         var trimStr = "";
         trimStr = nodeToCheck.className;
         var clsss = trimStr.split(" ");
@@ -518,7 +528,7 @@
         nodeToCheck.className = nwClass;
     };
 
-    $.attachAnEvent = function(evName,NId,fnName){
+    ra.attachAnEvent = function(evName,NId,fnName){
         var evNameIE = "";
         if(evName==="click"){evNameIE = "onclick";}else{evNameIE=evName;}
         if(NId.addEventListener){
@@ -526,9 +536,9 @@
         }else if(NId.attachEvent){
           NId.attachEvent(evNameIE, fnName);
         }
-    }
+    };
 
-    $.detachAnEvent = function(evName,NId,fnName){
+    ra.detachAnEvent = function(evName,NId,fnName){
         var evNameIE = "";
         if(evName==="click"){evNameIE = "onclick";}else{evNameIE=evName;}
         if(NId.removeEventListener){
@@ -538,7 +548,7 @@
         }
     };
 
-    window.$ = $;
+    window.ra = ra;
 
 })();
 
