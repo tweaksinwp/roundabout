@@ -25,11 +25,12 @@ First, include the script:
 Then, in javascript, in the HEAD, call the methods and functions for it works :
 
     allnodeExample1 = ra.getElementsByClassName(document.body,"example1");
-ra.carouselize({noeud:allnodeExample1});
+    ra.carouselize({noeud:allnodeExample1});
   
 In CSS, just add some rules for, at least, having a "window":
+    
     #example1{width:100px;height:45px;overflow:hidden;border:1px solid #555;}
-.example1{width:100px;}
+    .example1{width:100px;}
 
 And finally, in the HTML core, add in one wrapper, the list of child elements you need:
 
@@ -58,3 +59,5 @@ And finally, in the HTML core, add in one wrapper, the list of child elements yo
 Read the documentation!:
 * [english](http://simonertel.net/dossiers/roundabout_en.php)
 * [français](http://simonertel.net/dossiers/roundabout.php)
+
+
