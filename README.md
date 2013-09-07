@@ -23,31 +23,33 @@ First, include the script:
 `<script src="yourpath/roundAbout.js"></script>`
 
 Then, in javascript, in the HEAD, call the methods and functions for it works :
-`allnodeExample1 = ra.getElementsByClassName(document.body,"example1");
-ra.carouselize({noeud:allnodeExample1});`
+
+    allnodeExample1 = ra.getElementsByClassName(document.body,"example1");
+ra.carouselize({noeud:allnodeExample1});
   
 In CSS, just add some rules for, at least, having a "window":
-`#example1{width:100px;height:45px;overflow:hidden;border:1px solid #555;}
-.example1{width:100px;}`
+    #example1{width:100px;height:45px;overflow:hidden;border:1px solid #555;}
+.example1{width:100px;}
 
 And finally, in the HTML core, add in one wrapper, the list of child elements you need:
-    &lt;div id="example1"&gt;
-            &lt;div class="example1"&gt;
-	  &lt;img width="100" height="36" alt="" src="i/pic0.png" /&gt;
-            &lt;/div&gt;
-            &lt;div class="example1"&gt;
-	  &lt;img width="100" height="36" alt="" src="i/pic1.png" /&gt;
-            &lt;/div&gt;
-            &lt;div class="example1"&gt;
-	  &lt;img width="100" height="36" alt="" src="i/pic2.png" /&gt;
-            &lt;/div&gt;
-            &lt;div class="example1"&gt;
-	  &lt;img width="100" height="36" alt="" src="i/pic3.png" /&gt;
-            &lt;/div&gt;
-            &lt;div class="example1"&gt;
-	  &lt;img width="100" height="36" alt="" src="i/pic4.png" /&gt;
-            &lt;/div&gt;
-    &lt;/div&gt;
+
+    <div id="example1">
+      <div class="example1">
+        <img width="100" height="36" alt="" src="i/pic0.png" />
+      </div>
+      <div class="example1">
+    	<img width="100" height="36" alt="" src="i/pic1.png" />
+      </div>
+      <div class="example1">
+    	<img width="100" height="36" alt="" src="i/pic2.png" />
+      </div>
+      <div class="example1">
+    	<img width="100" height="36" alt="" src="i/pic3.png" />
+      </div>
+      <div class="example1">
+    	<img width="100" height="36" alt="" src="i/pic4.png" />
+      </div>
+    </div>
 
 
 
@@ -56,5 +58,3 @@ And finally, in the HTML core, add in one wrapper, the list of child elements yo
 Read the documentation!:
 * [english](http://simonertel.net/dossiers/roundabout_en.php)
 * [français](http://simonertel.net/dossiers/roundabout.php)
-
-
