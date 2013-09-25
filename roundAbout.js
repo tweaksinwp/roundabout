@@ -439,25 +439,29 @@
         var oldValue = [];
         newValue = keyValue.split(";");
         if(document.all){//Ie
-            if(existant!==null){
-                oldValue = existant.split(";",0);
-                for(var s=0;s<oldValue.length-1;s++){
-                    for(var k=0;k<newValue.length-1;k++){
-                        newKey = newValue[k].split(":");
-                        oldKey = oldValue[s].split(":");
-                        if(newKey[0] === oldKey[0]){
-                            itsanew = 1;
-                            toSave[s] = oldKey[0]+":"+newKey[1]+";";
+            if(existant!=null){//Ie10
+                if(existant[0]!=null){//Ie>10
+                    oldValue = existant.split(";",0);
+                    for(var s=0;s<oldValue.length-1;s++){
+                        for(var k=0;k<newValue.length-1;k++){
+                            newKey = newValue[k].split(":");
+                            oldKey = oldValue[s].split(":");
+                            if(newKey[0] === oldKey[0]){
+                                itsanew = 1;
+                                toSave[s] = oldKey[0]+":"+newKey[1]+";";
+                            }
                         }
+                        if(itsanew === 1){
+                            newString += toSave[s];
+                        }else{
+                            newString = newString+oldValue[s]+";";
+                        }
+                        itsanew = 0;
                     }
-                    if(itsanew === 1){
-                        newString += toSave[s];
-                    }else{
-                        newString = newString+oldValue[s]+";";
-                    }
-                    itsanew = 0;
+                    domNode.style.setAttribute("cssText",newString);
+                }else{
+                    domNode.style.setAttribute("cssText",keyValue);
                 }
-                domNode.style.setAttribute("cssText",newString);
             }else{
                 domNode.style.setAttribute("cssText",keyValue);
             }
